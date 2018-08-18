@@ -1,0 +1,442 @@
+<a href="http://localhost:4200"><span class="card widget-card-2" style="float:right;right:310px;top:47px"><i class="ti-home bg-c-blue card2-icon"></i></span></a>
+<div class="text-c-blue card widget-card-3" [innerHTML]="searchCity"></div>
+<div class="pcoded-search" >
+    <span class="searchbar-toggle">  </span>
+    <!-- <span class="pcoded-mtext"><b>Home</b></span> -->
+    <div class="pcoded-search-box " style="width:290px;margin:0px 0px 0px 800px">
+      <input type="text" placeholder="Search by City" [(ngModel)] = "city" (onKeyDown)="handleKeyboardEvent($event, city)">
+      <span class="search-icon" (click)="getDataByCity(city)"><i class="ti-search" aria-hidden="true"></i></span>
+    </div>
+  </div>
+
+<div class="row">    
+    <!-- card1 start -->
+  <div class="col-md-6 col-xl-3">
+      <div class="card widget-card-1">
+        <div class="card-block-small">
+          <i class="icofont icofont-pie-chart bg-c-blue card1-icon"></i>
+          <span class="text-c-blue">Carbon Monooxide</span>
+          <h4>{{coAverage}} µg/m3</h4>
+          <div>
+            <span class="f-left m-t-10 text-muted">
+                <i class="text-c-blue f-16 icofont icofont-refresh m-r-10"></i>Updates every 1 minute
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- card1 end -->
+    <!-- card1 start -->
+    <div class="col-md-6 col-xl-3">
+      <div class="card widget-card-1">
+        <div class="card-block-small">
+          <i class="icofont icofont-ui-social-link bg-c-pink card1-icon"></i>
+          <span class="text-c-pink">Sulphur Dioxide</span>
+          <h4>{{so2Average}} µg/m3</h4>
+          <div>
+            <span class="f-left m-t-10 text-muted">
+              <i class="text-c-pink f-16 icofont icofont-refresh m-r-10"></i>Updates every 1 minute
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- card1 end -->
+    <!-- card1 start -->
+    <div class="col-md-6 col-xl-3">
+      <div class="card widget-card-1">
+        <div class="card-block-small">
+          <i class="icofont icofont-bathtub bg-c-green card1-icon"></i>
+          <span class="text-c-green">Nitrogen Dioxide</span>
+          <h4>{{no2Average}} µg/m3</h4>
+          <div>
+            <span class="f-left m-t-10 text-muted">
+                <i class="text-c-green f-16 icofont icofont-refresh m-r-10"></i>Updates every 1 minute
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- card1 end -->
+    <!-- card1 start -->
+    <div class="col-md-6 col-xl-3">
+      <div class="card widget-card-1">
+        <div class="card-block-small">
+          <i class="icofont icofont-dust bg-c-yellow card1-icon"></i>
+          <span class="text-c-yellow">PM25</span>
+          <h4>{{pm25Average}} µg/m3</h4>
+          <div>
+            <span class="f-left m-t-10 text-muted">
+                <i class="text-c-yellow f-16 icofont icofont-refresh m-r-10"></i>Updates every 1 minute
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- card1 end -->
+  <!-- statstic card start -->
+  <div class="col-md-12 col-xl-4">
+      <div class="card widget-statstic-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <h5>Pollution Status</h5>
+            <p class="p-t-10 m-b-0 text-c-blue">Overall pollution verdict</p>
+          </div>
+        </div>
+        <div class="card-block">
+          <i class="icofont icofont-pollution st-icon bg-c-blue"></i>
+          <div class="text-left">
+            <h3 class="d-inline-block">{{status1}}</h3>
+            <!-- <span class="f-right">23%</span> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- statstic card end -->
+    <!-- statstic card start -->
+    <div class="col-md-6 col-xl-4">
+      <div class="card widget-statstic-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <h5>Risk</h5>
+            <p class="p-t-10 m-b-0 text-c-pink">Calculated Risk factor</p>
+          </div>
+        </div>
+        <div class="card-block">
+          <i class="icofont icofont-users-social st-icon bg-c-pink txt-lite-color"></i>
+  
+          <div class="text-left">
+            <h3 class="d-inline-block">{{risk1}}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- statstic card end -->
+    <!-- statstic card start -->
+    <div class="col-md-6 col-xl-4">
+      <div class="card widget-statstic-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <h5>Air Quality Index</h5>
+            <p class="p-t-10 m-b-0 text-c-yellow">Based on Air Quality Matrix</p>
+          </div>
+        </div>
+        <div class="card-block">
+          <i class="icofont icofont-eco-energy st-icon bg-c-yellow"></i>
+  
+          <div class="text-left">
+            <h3 class="d-inline-block">{{aqi}}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- statstic card end -->
+
+  <!-- map & Chart Start -->
+  <div class="col-md-12 col-xl-7">
+      <div class="row">
+        <div class="col-sm-12">
+          <app-card [title]="'Sensor Enabled Cities'">
+            <div id="world-map-vititors" style="width:100%;height:250px;"></div>
+          </app-card>
+        </div>
+        <div class="col-sm-12">
+          <app-card [title]="'Air Quality Index Report'" [blockClass]="'p-0'">
+            <div class="card-block-big revenue-report">
+              <div class="row">
+                <div class="col-lg-4">
+                  <h3 class="f-w-600">AQI : {{aqi}}</h3>
+                </div>
+                <div class="col-lg-4">
+                  <div id="CO">CO2 | {{coAverage}}</div>
+                </div>
+                <div class="col-lg-4">
+                  <div id="NO2">NO2  |{{no2Average}}</div>
+                </div>
+                <div class="col-lg-4">
+                  <div id="SO2">SO2 | {{so2Average}}</div>
+                </div>
+                <div class="col-lg-4">
+                  <div id="o3">O3 | {{o3Concentration}}</div>
+                </div>
+                <div class="col-lg-4">
+                  <div id="PM25">PM25 | {{pm25Concentration}}</div>
+                </div>
+            
+              </div>
+            </div>
+          </app-card>
+        </div>
+    </div>
+    </div>  
+    <div class="col-md-12 col-xl-5">
+      <div class="card bg-c-pink card-map">
+        <div class="card-header">
+          <div class="card-header-left">
+            <h5>Strongest location</h5>
+          </div>
+        </div>
+        <div class="card-block">
+          <h2 class="d-inline-block">{{strongestImpactCity}} <i
+            class="icofont icofont-social-google-map f-35"></i></h2>
+          <h6>{{strongestLocation}}</h6>
+        </div>
+        <div id="world-map-markers" style="width:100%;height:500px;"></div>
+      </div>
+    </div>
+    <!-- map & Chart End -->
+
+  <div class="col-md-12 col-xl-7">
+      <div class="card bg-c-green green-contain-card ">
+        <div class="card-block-big p-t-20 p-b-20">
+          <h4 class="p-t-20 "><br><br><br>Health Recommendations for you</h4>
+        </div>
+        <div class="card m-b-0 ">
+          <div class=" card-block-big p-t-20 p-b-20 ">
+            <img src="assets/images/heart.png" alt=" " class="img-circle top " style="height:100px;">
+            <div class="d-inline-block m-l-20 ">
+              <h6 class="f-w-600 ">Status: {{healthStatus1}}</h6>
+              <p class="text-muted ">Risk: {{risk3}}</p>
+            </div>
+            <span class="f-w-600 f-right "></span>
+            <p class="text-muted ">{{precautions}}</p>
+            <div class="icon-card d-inline-block ">
+              <i class="icofont icofont-share text-muted "></i>
+            </div>
+            <div class="icon-card d-inline-block p-l-20 ">
+              <i class="icofont icofont-heart-alt text-c-pink "></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sentiment SVG Start -->
+  <div class="col-md-12 col-xl-5">
+      <app-card [title]="'Breathability vs Toxicity'" [cardClass]="'sentiment-card'" [blockClass]="'text-center'">
+        <div class="row sentiment-center">
+          <div class="col-sm-3">
+            
+          </div>
+          <div class="col-sm-5">
+            <div class="happyball">50</div>
+          </div>
+          <div class="col-sm-4">
+            <h4 class="text-c-green">96%</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <h6 class="text-muted m-t-10">Breathable Index</h6>
+          </div>
+        </div>
+        <div class="row sentiment-center b-t-default p-t-20 m-t-20">
+          <div class="col-sm-3">
+           
+          </div>
+          <div class="col-sm-5">
+            <div class="sadball"></div>
+          </div>
+          <div class="col-sm-4">
+            <h4 class="text-c-pink">4%</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <h6 class="text-muted m-t-10">Toxicity Index</h6>
+          </div>
+        </div>
+      </app-card>
+    </div>
+    <!-- Sentiment SVG End -->
+
+
+<!-- 
+    <div class="card card-pink total-card">
+      <div class="card-block">
+        <div class="text-left">
+          <h4>489</h4>
+          <p class="m-0">Total Comment</p>
+        </div>
+        <span class="label bg-c-pink value-badges">15%</span>
+      </div>
+      <chart [type]="'line'" [data]="totalValueGraphData2" [options]="totalValueGraphOption" style="width: 100%; height: 100px;"></chart>
+    </div> -->
+
+  <!-- </div>  -->
+
+  <!-- Statistics End -->
+ <!-- map started -->
+    <div class="col-sm-6">
+      <app-card [title]="'Precise Measurements Map'" [classHeader]="true">
+          <span class="code-header">Click on markers to see indiviual measurements.</span>
+        <span class="code-header"></span>
+        <agm-map [latitude]="lat" [longitude]="lng" [zoom]="4" class="gm-style">        
+          <agm-marker [latitude]="latLong.lat" [longitude]="latLong.long"  *ngFor="let latLong of latLongArray">
+              <agm-info-window>{{latLong.label}}</agm-info-window>
+          </agm-marker>
+         
+      </agm-map>
+      </app-card>
+    </div>
+   
+    <div class="col-sm-6">
+      <app-card [title]="'Coverage Area'" [classHeader]="true">
+        <span class="code-header">Zoom in to see coverage area.</span>
+        <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+          <agm-circle 
+            [latitude]="latLong.lat"
+            [longitude]="latLong.long"
+            [radius]="5000"
+            [fillColor]="'red'"
+            [circleDraggable]="false"
+            [editable]="false" *ngFor="let latLong of latLongArray"
+          >
+          </agm-circle>
+        </agm-map>
+      </app-card>
+    </div>
+
+  <!-- map ended -->
+ 
+  <!-- data widget start -->
+  <div class="col-md-12 col-xl-6">
+      <app-card [title]="'Concentration of each pollutant'" [cardClass]="'project-task'" [blockClass]="'p-b-10'">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th>Pollutants</th>
+              <th>Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>
+                <div class="task-contain">
+                  <h6 class="bg-c-blue d-inline-block text-center">CO</h6>
+                  <p class="d-inline-block m-l-20">Carbon Monoxide</p>
+                </div>
+              </td>
+              <td>
+                <p class="d-inline-block m-r-20">{{coConcentration}}%</p>
+                <div class="progress d-inline-block">
+                  <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ 'width': coConcentration + '%' }">
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-contain">
+                  <h6 class="bg-c-pink d-inline-block text-center">NO2</h6>
+                  <p class="d-inline-block m-l-20">Nitrogen Dioxide</p>
+                </div>
+              </td>
+              <td>
+                <p class="d-inline-block m-r-20">{{no2Concentration}}%</p>
+                <div class="progress d-inline-block">
+                  <div class="progress-bar bg-c-pink" role="progressbar" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ 'width': no2Concentration + '%' }">
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-contain">
+                  <h6 class="bg-c-yellow d-inline-block text-center">SO2</h6>
+                  <p class="d-inline-block m-l-20">Sulphur Dioxide</p>
+                </div>
+              </td>
+              <td>
+                <p class="d-inline-block m-r-20">{{so2Concentration}}%</p>
+                <div class="progress d-inline-block">
+                  <div class="progress-bar bg-c-yellow" role="progressbar" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ 'width': so2Concentration + '%' }">
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-contain">
+                  <h6 class="bg-c-green d-inline-block text-center">PM25</h6>
+                  <p class="d-inline-block m-l-20">Particulate Matter</p>
+                </div>
+              </td>
+              <td>
+                <p class="d-inline-block m-r-20">{{pm25Concentration}}%</p>
+                <div class="progress d-inline-block">
+                  <div class="progress-bar bg-c-green" role="progressbar" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ 'width': pm25Concentration + '%' }">
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="task-contain">
+                  <h6 class="bg-c-blue d-inline-block text-center">O3</h6>
+                  <p class="d-inline-block m-l-20">Ozone</p>
+                </div>
+              </td>
+              <td>
+                <p class="d-inline-block m-r-20">{{o3Concentration}}%</p>
+                <div class="progress d-inline-block">
+                  <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ 'width': o3Concentration + '%' }">
+                  </div>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </app-card>
+    </div>
+  <!-- data widget End -->
+
+
+  <!-- Statistics and revenue End -->
+  <div class="col-md-12 col-xl-6">
+      <div class="card">
+        <div class="card-block prod-order-card">
+          <h5>Acidic Pollutant Index</h5>
+          <div class="row">
+            <div class="col-sm-12">
+              <div id="solid-gauge"></div>
+            </div>
+          </div>
+          <br><br><br><br>
+          <ul class="list-unstyled b-t-default">
+            <br>
+            <li>
+              <div class="legend-icon">
+                <span class="bg-c-blue"></span>
+              </div>
+              <div class="legend-cont">
+                <p>CO</p>
+                <span>Nominal</span>
+              </div>
+            </li>
+            <li>
+              <div class="legend-icon">
+                <span class="bg-c-pink"></span>
+              </div>
+              <div class="legend-cont">
+                <p>SO2</p>
+                <span>Nominal</span>
+              </div>
+            </li>
+            <li>
+              <div class="legend-icon">
+                <span class="bg-c-yellow"></span>
+              </div>
+              <div class="legend-cont">
+                <p>NO2</p>
+                <span>Above Nominal</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
